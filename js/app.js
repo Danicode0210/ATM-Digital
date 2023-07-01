@@ -19,6 +19,7 @@ const receiptContent = document.querySelector(".receipt-content");
 
 document.addEventListener("DOMContentLoaded", e => {
   if(!isLogin) window.location.href = "login.html";
+  document.querySelector(".current-year").textContent = date.getFullYear();
 
   if(dealings.length === 0) dealingContent.textContent = "Aún no tienes movimientos.";
   else dealingContent.classList.add("none");
@@ -50,13 +51,16 @@ document.addEventListener("DOMContentLoaded", e => {
       fragment.appendChild(clone);
     })
     document.querySelector(".dealing-cards").appendChild(fragment);
-  } else {
+  } 
+  else {
     dealingContent.textContent = "Aún no tienes movimientos.";
   }
-  document.querySelector(".current-year").textContent = date.getFullYear();
 })
 
 document.addEventListener('click', e => {
+  let validTransaction ;
+  let typeTransaction;
+
   if(e.target.matches(".open-modal")) {
     e.preventDefault();
     modal.classList.remove("none");
@@ -66,9 +70,6 @@ document.addEventListener('click', e => {
       hour: date.toLocaleTimeString(),
       type: "insert"
     };
-
-    let validTransaction ;
-    let typeTransaction;
 
     if(e.target.matches(".insert")) {
       formTitle.textContent = "Ingresar Dinero";
@@ -90,6 +91,7 @@ document.addEventListener('click', e => {
       if(isNaN(amount)) showError("El valor debe ser un numero.")
       else amount = Number(amount);
 
+      //Load spinning
       loader.classList.remove("none");
       btnTransaction.classList.add("none");
 
